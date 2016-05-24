@@ -22,6 +22,19 @@ class City
 
 };
 
+class Edge
+{
+
+	public:
+	
+		City *city1;
+		
+		City *city2;
+		
+		int distance;
+
+};
+
 int displayCityVector(std::vector<City*> cityVector)
 {
 
@@ -32,6 +45,14 @@ int displayCityVector(std::vector<City*> cityVector)
 		
 	
 	}
+
+	return 0;
+
+}
+
+//calculates the distances between all cities and puts them in Edge vector
+int calculateDistances(std::vector<City*> cityVector, std::vector<Edge*> edgesVector)
+{
 
 	return 0;
 
@@ -73,6 +94,10 @@ int main(int argc, char** argv)
 	inputFile.close();
 	
 	displayCityVector(cityVector);
+	
+	std::vector<Edge*> edgesVector;
+	
+	calculateDistances(cityVector, edgesVector);
 	
 	
 	clock_t begin = clock();
