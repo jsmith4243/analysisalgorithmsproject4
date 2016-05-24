@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <ctime>
 
 class City
 {
@@ -74,7 +75,21 @@ int main(int argc, char** argv)
 	displayCityVector(cityVector);
 	
 	
+	clock_t begin = clock();
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	clock_t end = clock();
+	
+	double timeTaken = double(end - begin) / CLOCKS_PER_SEC;
 	
 	
 	
