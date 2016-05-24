@@ -22,7 +22,12 @@ int main(int argc, char** argv)
 	
 	inputFile.close();
 	
+	std::string outputFileName;
+	outputFileName = argv[1];
+	outputFileName.append(".tour");
 	
+	std::ofstream outputFile(outputFileName);
+	outputFile.close();
 	
 	
 	
