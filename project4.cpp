@@ -37,7 +37,7 @@ class Edge
 
 };
 
-int greedyTour(std::vector<City*> &cityVector, std::vector<Edge*> &edgesVector)
+int greedyTour(std::vector<City*> &cityVector, std::vector<City*> &cityVectorOrderVisited, std::vector<Edge*> &edgesVector )
 {
 
 	int lengthOfTour = 0;
@@ -78,6 +78,8 @@ int greedyTour(std::vector<City*> &cityVector, std::vector<Edge*> &edgesVector)
 	Edge *smallestEdge;
 	
 	int numberOfCitiesVisited = 0;
+	
+	cityVectorOrderVisited.push_back(currentCity);
 	
 	
 	while (numberOfCitiesVisited < numberOfCities)
@@ -144,6 +146,8 @@ int greedyTour(std::vector<City*> &cityVector, std::vector<Edge*> &edgesVector)
 		currentCity->isVisited = true;
 		lengthOfTour += smallestEdge->distance;
 		numberOfCitiesVisited++;
+		
+		cityVectorOrderVisited.push_back(currentCity);
 		
 	}
 	
@@ -261,6 +265,10 @@ int main(int argc, char** argv)
 	
 	std::vector<City*> cityVector;
 	
+	std::vector<City*> cityVectorOrderVisited;
+	
+	
+	
 	City *currentCity;
 	
 	while (inputFile >> cityIdentifier >> xCoordinate >> yCoordinate)
@@ -302,7 +310,7 @@ int main(int argc, char** argv)
 	
 	
 	
-	lengthOfTour = greedyTour(cityVector, edgesVector);
+	lengthOfTour = greedyTour(cityVector, cityVectorOrderVisited, edgesVector);
 	
 	displayCityVector(cityVector);
 	
@@ -325,10 +333,13 @@ int main(int argc, char** argv)
 	std::ofstream outputFile(outputFileName);
 	
 	outputFile << lengthOfTour << std::endl;
-	for (std::vector<City*>::iterator iterator = cityVector.begin(); iterator != cityVector.end(); ++iterator)
+	
+	//for (std::vector<City*>::iterator iterator = cityVector.begin(); iterator != cityVector.end(); ++iterator)
+	for (std::vector<City*>::iterator iterator = cityVectorOrderVisited.begin(); iterator != cityVectorOrderVisited.end(); ++iterator)
 	{
 	
-		outputFile << (*iterator)->cityIdentifier << std::endl;
+		outputFile << (*iterator)->cityIdentifier << /*" order visited: " << (*iterator)->orderVisited << */ std::endl;
+		
 		
 	
 	}
