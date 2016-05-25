@@ -44,20 +44,28 @@ int greedyTour(std::vector<City*> &cityVector, std::vector<Edge*> &edgesVector)
 	
 	Edge *currentEdge;
 	City* currentCity;
+	City* startingCityPointer;
 	
 	
 	
 	int numberOfCities;
 	numberOfCities = cityVector.size();
+
 	
 	int startingCityPos;
 	std::vector<City*>::iterator startingCity;
 	startingCity = cityVector.begin();
 	startingCityPos = (rand() % numberOfCities); 
+	std::cout << "starting city is: " << startingCityPos << std::endl;
 	for (int i = 0; i < startingCityPos; i++)
 	{
 		startingCity++;
 	}
+	
+	startingCityPointer = (*startingCity);
+	
+	std::cout << "starting city name is: " << (*startingCity)->cityIdentifier << std::endl;
+	
 
 	int orderVisited = 1;
 	
@@ -73,7 +81,32 @@ int greedyTour(std::vector<City*> &cityVector, std::vector<Edge*> &edgesVector)
 	
 	
 	while (numberOfCitiesVisited < numberOfCities)
+	//for (std::vector<City*>::iterator iterator1 = cityVector.begin(); iterator1 != cityVector.end(); ++iterator1)
 	{
+	
+		//close the loop
+		if (numberOfCitiesVisited == (numberOfCities-1))
+		{
+		
+		
+			int lastDistance;
+			int x1 = currentCity->xCoordinate;
+			int x2 = startingCityPointer->xCoordinate;
+			int y1 = currentCity->yCoordinate;
+			int y2 = startingCityPointer->yCoordinate;
+			
+			
+			
+			lastDistance = sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
+			lengthOfTour = lengthOfTour + lastDistance;
+			
+			
+		
+			break;
+			
+		
+		}
+	
 	
 		for(std::vector<Edge*>::iterator iterator = edgesVector.begin(); iterator != edgesVector.end(); ++iterator)
 		{
@@ -84,6 +117,7 @@ int greedyTour(std::vector<City*> &cityVector, std::vector<Edge*> &edgesVector)
 				if ((*iterator)->city2->isVisited == false)
 				{
 			
+					//if ((*iterator)->distance <= smallestDistance)
 					if ((*iterator)->distance < smallestDistance)
 					{
 				
@@ -102,9 +136,11 @@ int greedyTour(std::vector<City*> &cityVector, std::vector<Edge*> &edgesVector)
 		}
 		
 		currentCity = smallestEdge->city2;
+		orderVisited++;
+		std::cout << "orderVisited is: " << orderVisited << " current city is: " << currentCity->cityIdentifier << std::endl;
 		
 		currentCity->orderVisited = orderVisited;
-		orderVisited++;
+		
 		currentCity->isVisited = true;
 		lengthOfTour += smallestEdge->distance;
 		numberOfCitiesVisited++;
@@ -123,7 +159,7 @@ int displayCityVector(std::vector<City*> cityVector)
 	for (std::vector<City*>::iterator iterator = cityVector.begin(); iterator != cityVector.end(); ++iterator)
 	{
 	
-		std::cout << "cityIdentifier: " << (*iterator)->cityIdentifier << " xCoordinate: " << (*iterator)->xCoordinate << " yCoordinate: " << (*iterator)->yCoordinate << " orderVisited: " << (*iterator)->orderVisited  << std::endl;
+		std::cout << "cityIdentifier: " << (*iterator)->cityIdentifier << " xCoordinate: " << (*iterator)->xCoordinate << " yCoordinate: " << (*iterator)->yCoordinate << " orderVisited: " << (*iterator)->orderVisited  << " isVisited: " << (*iterator)-> isVisited << std::endl;
 		
 	
 	}
@@ -141,7 +177,7 @@ int displayEdgesVector(std::vector<Edge*> edgesVector)
 	for (std::vector<Edge*>::iterator iterator = edgesVector.begin(); iterator != edgesVector.end(); ++iterator)
 	{
 	
-		std::cout << "city1: " << (*iterator)->city1 << " city2: " << (*iterator)->city2 << " distance: " << (*iterator)->distance   << std::endl;
+		std::cout << "city1: " << (*iterator)->city1->cityIdentifier << " city2: " << (*iterator)->city2->cityIdentifier << " distance: " << (*iterator)->distance   << std::endl;
 		
 	
 	}
@@ -179,16 +215,17 @@ int calculateDistances(std::vector<City*> &cityVector, std::vector<Edge*> &edges
 			y1 = (*iterator1)->yCoordinate;
 			y2 = (*iterator2)->yCoordinate;
 			
-			distance = floor( sqrt( (x1 - x2)^2 + ( y1 - y2)^2 ) );
+
+			distance = sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
 			
-			/*
+			
 			std::cout << "x1 is : " << x1 << std::endl;
 			std::cout << "x2 is : " << x2 << std::endl;
 			std::cout << "y1 is : " << y1 << std::endl;
 			std::cout << "y2 is : " << y2 << std::endl;
 			std::cout << "distance is : " << distance << std::endl;
 			//std::cout << "equation is: " << (x1 - x2)^2 + ( y1 - y2)^2 << std::endl;
-			*/
+		
 			
 			Edge *currentEdge = new Edge();
 			currentEdge->city1 = *iterator1;
@@ -235,6 +272,7 @@ int main(int argc, char** argv)
 		currentCity->xCoordinate = xCoordinate;
 		currentCity->yCoordinate = yCoordinate;
 		currentCity->orderVisited = 0;
+		currentCity->isVisited = false;
 		
 		cityVector.push_back(currentCity);
 		
