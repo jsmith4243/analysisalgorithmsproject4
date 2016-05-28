@@ -4,6 +4,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <math.h>
+#include <climits>
 
 class City
 {
@@ -312,14 +313,18 @@ int main(int argc, char** argv)
 	
 	lengthOfTour = greedyTour(cityVector, cityVectorOrderVisited, edgesVector);
 	
-	displayCityVector(cityVector);
+	
 	
 	
 	
 	
 	clock_t end = clock();
 	
+	displayCityVector(cityVector);
+	
 	double timeTaken = double(end - begin) / CLOCKS_PER_SEC;
+	
+	std::cout << ">>> Time taken was: " << timeTaken << " <<<" << std::endl;
 	
 	
 	
@@ -330,7 +335,7 @@ int main(int argc, char** argv)
 	std::string outputFileName;
 	outputFileName = argv[1];
 	outputFileName.append(".tour");
-	std::ofstream outputFile(outputFileName);
+	std::ofstream outputFile(outputFileName.c_str());
 	
 	outputFile << lengthOfTour << std::endl;
 	
