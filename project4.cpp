@@ -353,6 +353,16 @@ int main(int argc, char** argv)
 	outputFile.close();
 	
 	
+	std::string outputFileNameTimeTaken;
+	outputFileNameTimeTaken = argv[1];
+	outputFileNameTimeTaken.append(".timetaken");
+	std::ofstream outputFileTimeTaken(outputFileNameTimeTaken.c_str());
+	
+	outputFileTimeTaken << timeTaken << " seconds" << std::endl;
+	
+	outputFileTimeTaken.close();
+	
+	
 	
 
 }
